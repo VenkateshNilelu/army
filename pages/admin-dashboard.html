@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Indian Army Civilian Staff</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="dashboard-layout">
+    <header class="dashboard-header">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">☰</button>
+        <div class="dashboard-header-left">
+            <div class="profile-trigger" id="profileTrigger">
+                <img id="profilePhotoImg" class="profile-photo" src="" alt="Photo" style="display:none;">
+                <div id="profilePhotoPlaceholder" class="profile-photo-placeholder">👤</div>
+                <div class="profile-info">
+                    <span class="rank-name" id="profileRank">Admin</span>
+                    <span class="service-id" id="profileServiceId">-</span>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-header-right">
+            <div class="notification-bell" id="notificationBell">
+                🔔
+                <span class="notification-badge" id="notificationBadge"></span>
+            </div>
+            <div class="notification-dropdown" id="notificationDropdown">
+                <div id="notificationList"></div>
+                <div style="padding: 0.5rem; text-align: center;"><a href="notification-view.html">View All</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+    <aside class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <strong id="sideMenuRank">Admin</strong>
+            <span id="sideMenuServiceId">-</span>
+        </div>
+        <nav class="side-menu-nav">
+            <a href="#" class="menu-item" data-modal="serviceDetails">Service Details</a>
+            <a href="#" class="menu-item" data-modal="personalDetails">Personal Details</a>
+            <a href="#" class="menu-item" data-modal="updatePassword">Update Password</a>
+            <a href="#" class="menu-item logout" id="logoutBtn">Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="greeting-section">
+            <h1>Admin Control Panel</h1>
+            <p>Full system control: users, logs, analytics</p>
+        </div>
+        <div class="action-cards">
+            <a href="#" class="action-card" data-modal="viewUsers">View All Users</a>
+            <a href="#" class="action-card" data-modal="systemLogs">System Logs</a>
+            <a href="#" class="action-card" data-modal="dashboardAnalytics">Dashboard Analytics</a>
+        </div>
+        <section class="section-card">
+            <h3>Analytics Overview</h3>
+            <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                <div class="analytics-card" style="background: var(--beige-light); padding: 1rem; border-radius: 8px;">
+                    <strong>Total Users</strong>
+                    <p id="statTotalUsers">0</p>
+                </div>
+                <div class="analytics-card" style="background: var(--beige-light); padding: 1rem; border-radius: 8px;">
+                    <strong>Users by Role</strong>
+                    <p id="statByRole">-</p>
+                </div>
+                <div class="analytics-card" style="background: var(--beige-light); padding: 1rem; border-radius: 8px;">
+                    <strong>Monthly Leaves</strong>
+                    <p id="statLeaves">0</p>
+                </div>
+                <div class="analytics-card" style="background: var(--beige-light); padding: 1rem; border-radius: 8px;">
+                    <strong>Salary Processed</strong>
+                    <p id="statSalary">0</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/modals.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

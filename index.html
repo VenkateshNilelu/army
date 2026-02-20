@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Army Civilian Staff Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="landing-page">
+    <div class="landing-overlay"></div>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/ashoka-lion.svg" alt="Indian Army Emblem" class="army-emblem" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <h1>Indian Army</h1>
+                    <p>Civilian Staff Management System</p>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="landing-main">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>Serving with Honour</h2>
+                <p class="hero-subtitle">Streamlined management for civilian staff across ranks</p>
+                <p class="hero-description">
+                    A comprehensive system for leave management, transfer processing, salary tracking, 
+                    and hierarchical workflow approvals. Secure, efficient, and built for the backbone of our forces.
+                </p>
+                <div class="hero-actions">
+                    <a href="login.html" class="btn btn-primary btn-lg">Login to Portal</a>
+                    <a href="register.html" class="btn btn-outline btn-lg">New Registration</a>
+                </div>
+                <p style="margin-top:1.5rem; color: rgba(255,255,255,0.8); font-size: 0.9rem;">Quick Access (bypass login):</p>
+                <div class="hero-actions" style="margin-top: 0.5rem;">
+                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Soldier">Soldier</a>
+                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Lieutenant">Lieutenant</a>
+                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Colonel">Colonel</a>
+                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Accountant">Accountant</a>
+                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Admin">Admin</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Leave Management</h3>
+                    <p>Hierarchical leave approval workflow from Soldier to Colonel</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Transfer Management</h3>
+                    <p>Track and process transfer requests across battalions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Salary Tracking</h3>
+                    <p>Month-wise salary records with PDF report generation</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Notifications</h3>
+                    <p>Real-time alerts for approvals, transfers, and salary updates</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Role-Based Access</h3>
+                    <p>Secure dashboards tailored to each rank and responsibility</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Indian Army Civilian Staff Management System. All rights reserved.</p>
+            <p class="footer-tagline">सत्यमेव जयते</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        DataStorage.init();
+        document.querySelectorAll('.quick-login').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const role = this.dataset.role;
+                const user = DataStorage.getUsers().find(u => u.rank === role);
+                if (user) {
+                    DataStorage.setSession(user);
+                    window.location.href = Auth.DASHBOARD_MAP[role];
+                }
+            });
+        });
+    </script>
+</body>
+</html>

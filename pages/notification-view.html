@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Indian Army Civilian Staff</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="dashboard-layout">
+    <header class="dashboard-header">
+        <a href="#" id="backLink" style="color:white; text-decoration:none;">← Back</a>
+    </header>
+    <main class="main-content">
+        <div class="greeting-section">
+            <h1>Notifications</h1>
+        </div>
+        <div class="section-card" id="notificationList"></div>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        DataStorage.init();
+        const session = Auth.requireAuth();
+        if (!session) { window.location.href = '../login.html'; }
+        const dashMap = { Soldier: 'soldier-dashboard.html', Lieutenant: 'lieutenant-dashboard.html', Colonel: 'colonel-dashboard.html', Accountant: 'accountant-dashboard.html', Admin: 'admin-dashboard.html' };
+        document.getElementById('backLink').href = dashMap[session.rank] || 'soldier-dashboard.html';
+
+        const notifs = DataStorage.getNotifications(session.id);
+        const list = document.getElementById('notificationList');
+        if (notifs.length === 0) {
+            list.innerHTML = '<p>No notifications.</p>';
+        } else {
+            list.innerHTML = notifs.map(n => {
+                DataStorage.markNotificationRead(n.id);
+                return `
+                    <div class="notification-item" style="padding:1rem; border-bottom:1px solid var(--gray-light);">
+                        <strong>${n.title}</strong>
+                        <p style="margin:0.3rem 0 0;">${n.message}</p>
+                        <small style="color:var(--gray);">${new Date(n.createdAt).toLocaleString()}</small>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
