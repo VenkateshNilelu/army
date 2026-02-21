@@ -73,6 +73,7 @@ function initCommonModals(session) {
             <div class="form-group">
                 <label>Current Password</label>
                 <input type="password" id="oldPass" required>
+                <a href="../forgot-password.html" style="display: inline-block; margin-top: 0.5rem; font-size: 0.9rem; color: #4a90e2; text-decoration: none;">Forgot Password?</a>
             </div>
             <div class="form-group">
                 <label>New Password</label>
