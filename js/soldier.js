@@ -110,7 +110,7 @@
 
     // Transfer History
     const transferContent = () => {
-        const transfers = DataStorage.getTransfers().filter(t => t.userId === session.id || t.soldierId === session.id);
+        const transfers = StaticData.getTransfersBySoldier(session.id);
         if (transfers.length === 0) return '<p>No transfer history.</p>';
         let table = '<table class="data-table"><thead><tr><th>From</th><th>To</th><th>Date</th><th>Status</th></tr></thead><tbody>';
         transfers.forEach(t => {
