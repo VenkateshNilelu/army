@@ -333,6 +333,129 @@ const StaticData = {
         }
     ],
 
+    logs: [
+        {
+            id: 'LOG001',
+            timestamp: '2025-01-25T09:15:30Z',
+            action: 'USER_LOGIN',
+            details: 'Admin logged in from 192.168.1.100'
+        },
+        {
+            id: 'LOG002',
+            timestamp: '2025-01-25T09:20:45Z',
+            action: 'USER_SEARCH',
+            details: 'Searched for soldier "Vikram Singh"'
+        },
+        {
+            id: 'LOG003',
+            timestamp: '2025-01-25T09:35:10Z',
+            action: 'SALARY_PROCESSED',
+            details: 'Monthly salary processed for 15 soldiers'
+        },
+        {
+            id: 'LOG004',
+            timestamp: '2025-01-25T10:02:22Z',
+            action: 'TRANSFER_APPROVED',
+            details: 'Transfer request TR008 approved by Colonel'
+        },
+        {
+            id: 'LOG005',
+            timestamp: '2025-01-25T10:45:15Z',
+            action: 'LEAVE_REQUEST',
+            details: 'Leave request LV042 submitted by Priya Nair'
+        },
+        {
+            id: 'LOG006',
+            timestamp: '2025-01-25T11:12:33Z',
+            action: 'PASSWORD_RESET',
+            details: 'Password reset initiated for user SOL002'
+        },
+        {
+            id: 'LOG007',
+            timestamp: '2025-01-25T11:58:47Z',
+            action: 'NOTIFICATION_SENT',
+            details: 'Transfer notification sent to 4 soldiers'
+        },
+        {
+            id: 'LOG008',
+            timestamp: '2025-01-25T12:30:20Z',
+            action: 'BATTALION_UPDATE',
+            details: 'Battalion details updated: B1 strength increased to 260'
+        },
+        {
+            id: 'LOG009',
+            timestamp: '2025-01-25T13:15:05Z',
+            action: 'USER_BLOCKED',
+            details: 'User SOL003 blocked due to security policy'
+        },
+        {
+            id: 'LOG010',
+            timestamp: '2025-01-25T13:45:28Z',
+            action: 'DOCUMENT_UPLOAD',
+            details: 'Service document uploaded by Amit Sharma'
+        },
+        {
+            id: 'LOG011',
+            timestamp: '2025-01-25T14:20:11Z',
+            action: 'ANALYTICS_VIEW',
+            details: 'Dashboard analytics viewed by Admin'
+        },
+        {
+            id: 'LOG012',
+            timestamp: '2025-01-25T14:55:39Z',
+            action: 'LEAVE_APPROVED',
+            details: 'Leave request LV041 approved for Rahul Mishra'
+        },
+        {
+            id: 'LOG013',
+            timestamp: '2025-01-25T15:30:22Z',
+            action: 'REPORT_GENERATED',
+            details: 'Monthly salary report generated for 3 battalions'
+        },
+        {
+            id: 'LOG014',
+            timestamp: '2025-01-25T16:05:44Z',
+            action: 'SYSTEM_BACKUP',
+            details: 'Automated system backup completed successfully'
+        },
+        {
+            id: 'LOG015',
+            timestamp: '2025-01-25T16:40:18Z',
+            action: 'USER_UNBLOCKED',
+            details: 'User SOL001 unblocked by Admin request'
+        },
+        {
+            id: 'LOG016',
+            timestamp: '2025-01-25T17:15:33Z',
+            action: 'PERMISSION_CHANGED',
+            details: 'Permission level updated for Lieutenant user LIE002'
+        },
+        {
+            id: 'LOG017',
+            timestamp: '2025-01-25T17:50:55Z',
+            action: 'TRANSFER_REJECTED',
+            details: 'Transfer request TR009 rejected by Colonel'
+        },
+        {
+            id: 'LOG018',
+            timestamp: '2025-01-25T18:25:14Z',
+            action: 'SALARY_VERIFIED',
+            details: 'Salary records verified for 4th Battalion'
+        },
+        {
+            id: 'LOG019',
+            timestamp: '2025-01-25T19:00:40Z',
+            action: 'LOGIN_FAILED',
+            details: 'Failed login attempt for username "soldier1" from 192.168.1.50'
+        },
+        {
+            id: 'LOG020',
+            timestamp: '2025-01-25T19:35:27Z',
+            action: 'SESSION_TIMEOUT',
+            details: 'User session timed out after 2 hours of inactivity'
+        }
+    ],
+
     getBattalionById(battalionId) {
         return this.battalions.find(b => b.id === battalionId);
     },
@@ -377,5 +500,9 @@ const StaticData = {
 
     getTransfersBySoldier(soldierId) {
         return this.transfers.filter(t => t.soldierId === soldierId);
+    },
+
+    getLogs() {
+        return this.logs;
     }
 };
