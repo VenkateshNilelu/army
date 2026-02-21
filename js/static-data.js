@@ -100,6 +100,27 @@ const StaticData = {
         }
     ],
 
+    colonels: [
+        {
+            id: 'COL001',
+            name: 'Col. Rajesh Kumar',
+            serviceId: 'COL001',
+            rank: 'Colonel',
+            battalion: 'B1',
+            joiningDate: '2015-06-15',
+            experience: '10 years 7 months'
+        },
+        {
+            id: 'COL002',
+            name: 'Col. Suresh Patel',
+            serviceId: 'COL002',
+            rank: 'Colonel',
+            battalion: 'B2',
+            joiningDate: '2016-08-20',
+            experience: '9 years 5 months'
+        }
+    ],
+
     salaries: [
         { id: 'SAL001', soldierId: 'SOL001', soldierName: 'Vikram Singh', month: '2025-01', total: 32500, status: 'Paid' },
         { id: 'SAL002', soldierId: 'SOL001', soldierName: 'Vikram Singh', month: '2024-12', total: 32000, status: 'Paid' },
@@ -124,7 +145,19 @@ const StaticData = {
         { id: 'SAL021', lieutenantId: 'LIE002', lieutenantName: 'Lt. Priya Nair', month: '2024-11', total: 55500, status: 'Paid' },
         { id: 'SAL022', lieutenantId: 'LIE002', lieutenantName: 'Lt. Priya Nair', month: '2024-10', total: 55500, status: 'Paid' },
         { id: 'SAL023', lieutenantId: 'LIE002', lieutenantName: 'Lt. Priya Nair', month: '2024-09', total: 55000, status: 'Paid' },
-        { id: 'SAL024', lieutenantId: 'LIE002', lieutenantName: 'Lt. Priya Nair', month: '2024-08', total: 55000, status: 'Paid' }
+        { id: 'SAL024', lieutenantId: 'LIE002', lieutenantName: 'Lt. Priya Nair', month: '2024-08', total: 55000, status: 'Paid' },
+        { id: 'SAL025', colonelId: 'COL001', colonelName: 'Col. Rajesh Kumar', month: '2025-01', total: 85000, status: 'Paid' },
+        { id: 'SAL026', colonelId: 'COL001', colonelName: 'Col. Rajesh Kumar', month: '2024-12', total: 85000, status: 'Paid' },
+        { id: 'SAL027', colonelId: 'COL001', colonelName: 'Col. Rajesh Kumar', month: '2024-11', total: 84500, status: 'Paid' },
+        { id: 'SAL028', colonelId: 'COL001', colonelName: 'Col. Rajesh Kumar', month: '2024-10', total: 84500, status: 'Paid' },
+        { id: 'SAL029', colonelId: 'COL001', colonelName: 'Col. Rajesh Kumar', month: '2024-09', total: 84000, status: 'Paid' },
+        { id: 'SAL030', colonelId: 'COL001', colonelName: 'Col. Rajesh Kumar', month: '2024-08', total: 84000, status: 'Paid' },
+        { id: 'SAL031', colonelId: 'COL002', colonelName: 'Col. Suresh Patel', month: '2025-01', total: 87000, status: 'Paid' },
+        { id: 'SAL032', colonelId: 'COL002', colonelName: 'Col. Suresh Patel', month: '2024-12', total: 87000, status: 'Paid' },
+        { id: 'SAL033', colonelId: 'COL002', colonelName: 'Col. Suresh Patel', month: '2024-11', total: 86500, status: 'Paid' },
+        { id: 'SAL034', colonelId: 'COL002', colonelName: 'Col. Suresh Patel', month: '2024-10', total: 86500, status: 'Paid' },
+        { id: 'SAL035', colonelId: 'COL002', colonelName: 'Col. Suresh Patel', month: '2024-09', total: 86000, status: 'Paid' },
+        { id: 'SAL036', colonelId: 'COL002', colonelName: 'Col. Suresh Patel', month: '2024-08', total: 86000, status: 'Paid' }
     ],
 
     transfers: [
@@ -237,6 +270,66 @@ const StaticData = {
             date: '2024-05-25',
             status: 'Approved',
             reason: 'Operational Requirement'
+        },
+        {
+            id: 'TR012',
+            colonelId: 'COL001',
+            colonelName: 'Col. Rajesh Kumar',
+            from: 'Delhi Cantonment (B1)',
+            to: 'Kolkata Cantonment (B3)',
+            date: '2022-03-15',
+            status: 'Approved',
+            reason: 'High Command Posting'
+        },
+        {
+            id: 'TR013',
+            colonelId: 'COL001',
+            colonelName: 'Col. Rajesh Kumar',
+            from: 'Kolkata Cantonment (B3)',
+            to: 'Delhi Cantonment (B1)',
+            date: '2024-01-10',
+            status: 'Approved',
+            reason: 'Battalion Command'
+        },
+        {
+            id: 'TR014',
+            colonelId: 'COL001',
+            colonelName: 'Col. Rajesh Kumar',
+            from: 'Delhi Cantonment (B1)',
+            to: 'Army Headquarters',
+            date: '2024-09-20',
+            status: 'Approved',
+            reason: 'Senior Administrative Role'
+        },
+        {
+            id: 'TR015',
+            colonelId: 'COL002',
+            colonelName: 'Col. Suresh Patel',
+            from: 'Mumbai Cantonment (B2)',
+            to: 'Strategic Command Center',
+            date: '2023-06-10',
+            status: 'Approved',
+            reason: 'Strategic Operations'
+        },
+        {
+            id: 'TR016',
+            colonelId: 'COL002',
+            colonelName: 'Col. Suresh Patel',
+            from: 'Strategic Command Center',
+            to: 'Mumbai Cantonment (B2)',
+            date: '2024-02-20',
+            status: 'Approved',
+            reason: 'Battalion Command'
+        },
+        {
+            id: 'TR017',
+            colonelId: 'COL002',
+            colonelName: 'Col. Suresh Patel',
+            from: 'Mumbai Cantonment (B2)',
+            to: 'Defense Ministry',
+            date: '2024-11-05',
+            status: 'Approved',
+            reason: 'Policy Planning'
         }
     ],
 
@@ -265,6 +358,10 @@ const StaticData = {
         return this.salaries.filter(s => battalionSoldiers.some(bs => bs.id === s.soldierId));
     },
 
+    getSalariesByColonel(colonelId) {
+        return this.salaries.filter(s => s.colonelId === colonelId);
+    },
+
     getTransfersInitiatedByLieutenant(lieutenantId) {
         // For a lieutenant, show transfers related to their soldiers
         return this.transfers;
@@ -272,6 +369,10 @@ const StaticData = {
 
     getTransfersByLieutenant(lieutenantId) {
         return this.transfers.filter(t => t.lieutenantId === lieutenantId);
+    },
+
+    getTransfersByColonel(colonelId) {
+        return this.transfers.filter(t => t.colonelId === colonelId);
     },
 
     getTransfersBySoldier(soldierId) {

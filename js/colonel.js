@@ -91,21 +91,23 @@
     };
 
     const transferHistoryContent = () => {
-        const all = DataStorage.getTransfers().filter(t => t.commandingOfficer === session.id || battalions().some(b => b.id === t.from || b.id === t.to));
-        if (all.length === 0) return '<p>No transfer history.</p>';
-        let table = '<table class="data-table"><thead><tr><th>Soldier</th><th>From</th><th>To</th><th>Date</th><th>Status</th></tr></thead><tbody>';
-        all.forEach(t => {
-            table += `<tr><td>${t.soldierName || t.soldierId}</td><td>${t.from}</td><td>${t.to}</td><td>${t.date}</td><td><span class="badge badge-${t.status === 'Approved' ? 'success' : t.status === 'Rejected' ? 'danger' : 'warning'}">${t.status}</span></td></tr>`;
+        const transfers = StaticData.getTransfersByColonel(session.id);
+        if (transfers.length === 0) return '<p>No transfer history.</p>';
+        let table = '<table class="data-table"><thead><tr><th>From</th><th>To</th><th>Reason</th><th>Date</th><th>Status</th></tr></thead><tbody>';
+        transfers.forEach(t => {
+            table += `<tr><td>${t.from}</td><td>${t.to}</td><td>${t.reason}</td><td>${t.date}</td><td><span class="badge badge-${t.status === 'Approved' ? 'success' : t.status === 'Rejected' ? 'danger' : 'warning'}">${t.status}</span></td></tr>`;
         });
         return table + '</tbody></table>';
     };
 
     const salaryContent = () => {
-        const lts = lieutenants();
-        let html = '<table class="data-table"><thead><tr><th>Lieutenant</th><th>Battalion</th><th>Soldiers</th></tr></thead><tbody>';
-        lts.forEach(lt => {
-            const count = DataStorage.getUsers().filter(u => u.reportsTo === lt.id || (u.rank === 'Soldier' && u.battalion === lt.battalion)).length;
-            html += `<tr><td>${lt.name}</td><td>${lt.battalion}</td><td>${count}</td></tr>`;
+        const salaries = StaticData.getSalariesByColonel(session.id);
+        if (salaries.length === 0) return '<p>No salary information available.</p>';
+        let html = '<table class="data-table"><thead><tr><th>Month</th><th>Amount</th><th>Status</th></tr></thead><tbody>';
+        salaries.forEach(s => {
+            const monthDate = new Date(s.month + '-01');
+            const monthStr = monthDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'long' });
+            html += `<tr><td>${monthStr}</td><td>₹${s.total.toLocaleString('en-IN')}</td><td><span class="badge badge-${s.status === 'Paid' ? 'success' : 'warning'}">${s.status}</span></td></tr>`;
         });
         return html + '</tbody></table>';
     };
