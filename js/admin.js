@@ -43,7 +43,7 @@
             overlay = document.createElement('div');
             overlay.className = 'modal-overlay';
             overlay.id = id + 'Overlay';
-            overlay.innerHTML = `<div class="modal" style="max-width:800px;"><div class="modal-header"><h3></h3><button class="modal-close">&times;</button></div><div class="modal-body"></div></div>`;
+            overlay.innerHTML = `<div class="modal" style="max-width:1100px; width:95%;"><div class="modal-header"><h3></h3><button class="modal-close">&times;</button></div><div class="modal-body"></div></div>`;
             overlay.querySelector('.modal-close').onclick = () => overlay.classList.remove('active');
             overlay.onclick = (e) => { if (e.target === overlay) overlay.classList.remove('active'); };
             document.body.appendChild(overlay);
@@ -80,13 +80,14 @@
     };
 
     const systemLogsContent = () => {
-        const logs = DataStorage.getLogs().slice(0, 100);
+        const logs = StaticData.getLogs().slice(0, 100);
+        if (logs.length === 0) return '<p>No system logs available.</p>';
         return `
-            <div class="table-container" style="max-height:400px;overflow:auto;">
+            <div class="table-container" style="max-height:500px;overflow:auto;">
                 <table class="data-table">
                     <thead><tr><th>Time</th><th>Action</th><th>Details</th></tr></thead>
                     <tbody>
-                    ${logs.map(l => `<tr><td>${new Date(l.timestamp).toLocaleString()}</td><td>${l.action}</td><td>${l.details}</td></tr>`).join('')}
+                    ${logs.map(l => `<tr><td>${new Date(l.timestamp).toLocaleString('en-IN')}</td><td><span class="badge badge-info" style="background:#4a90e2; color:white; padding:0.25rem 0.5rem; border-radius:4px;">${l.action}</span></td><td>${l.details}</td></tr>`).join('')}
                     </tbody>
                 </table>
             </div>

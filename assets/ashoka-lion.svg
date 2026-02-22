@@ -1,4 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#d4c4a8">
-  <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/>
-  <text x="50" y="58" text-anchor="middle" font-size="40" font-weight="bold">>Å</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g fill="#d4af37">
+    <!-- Base Wheel -->
+    <circle cx="256" cy="370" r="55" stroke="#d4af37" stroke-width="8" fill="none"/>
+    
+    <!-- Lions simplified crown -->
+    <path d="M160 260 
+             Q180 200 256 200 
+             Q332 200 352 260 
+             L352 300 
+             Q332 270 256 270 
+             Q180 270 160 300 Z"/>
+
+    <!-- Left Lion Head -->
+    <circle cx="205" cy="240" r="25"/>
+    <!-- Right Lion Head -->
+    <circle cx="307" cy="240" r="25"/>
+    <!-- Center Lion Head -->
+    <circle cx="256" cy="215" r="28"/>
+
+    <!-- Base Platform -->
+    <rect x="170" y="300" width="172" height="30" rx="5"/>
+
+    <!-- Motto line -->
+    <rect x="190" y="340" width="132" height="8" rx="4"/>
+  </g>
 </svg>

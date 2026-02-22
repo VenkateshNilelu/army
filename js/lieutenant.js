@@ -38,9 +38,24 @@
 
     // Battalion Overview - Officers list
     const battalionContent = () => {
-        const sols = soldiers();
-        let html = `<h4>${battalion().name || session.battalion}</h4><p>Officers & Soldiers:</p><table class="data-table"><thead><tr><th>Service ID</th><th>Name</th><th>Rank</th></tr></thead><tbody>`;
-        sols.forEach(s => { html += `<tr><td>${s.serviceId}</td><td>${s.name}</td><td>${s.rank}</td></tr>`; });
+        const bat = StaticData.getBattalionById(session.battalion);
+        const batsoldiers = StaticData.getSoldiersByBattalion(session.battalion);
+        let html = `
+            <div style="margin-bottom: 2rem;">
+                <h4>${bat?.name || session.battalion}</h4>
+                <p><strong>Location:</strong> ${bat?.location || '-'}</p>
+                <p><strong>Headquarters:</strong> ${bat?.headquarters || '-'}</p>
+                <p><strong>Commanding Officer:</strong> ${bat?.commandingOfficer || '-'}</p>
+                <p><strong>Total Strength:</strong> ${bat?.totalStrength || '-'} personnel</p>
+                <p><strong>Established:</strong> ${bat?.established || '-'}</p>
+                <p><strong>Operational Area:</strong> ${bat?.operationalArea || '-'}</p>
+            </div>
+            <h4>Soldiers in Battalion</h4>
+            <table class="data-table"><thead><tr><th>Service ID</th><th>Name</th><th>Position</th><th>Joining Date</th><th>Experience</th></tr></thead><tbody>
+        `;
+        batsoldiers.forEach(s => { 
+            html += `<tr><td>${s.serviceId}</td><td>${s.name}</td><td>${s.position}</td><td>${s.joiningDate}</td><td>${s.experience}</td></tr>`; 
+        });
         return html + '</tbody></table>';
     };
 
@@ -103,23 +118,21 @@
     };
 
     const transferHistoryContent = () => {
-        const transfers = DataStorage.getTransfers().filter(t => t.initiatedBy === session.id || t.lieutenantId === session.id);
-        if (transfers.length === 0) return '<p>No transfers.</p>';
-        let table = '<table class="data-table"><thead><tr><th>Soldier</th><th>From</th><th>To</th><th>Date</th><th>Status</th></tr></thead><tbody>';
+        const transfers = StaticData.getTransfersByLieutenant(session.id);
+        if (transfers.length === 0) return '<p>No transfers in your record.</p>';
+        let table = '<table class="data-table"><thead><tr><th>From</th><th>To</th><th>Reason</th><th>Date</th><th>Status</th></tr></thead><tbody>';
         transfers.forEach(t => {
-            table += `<tr><td>${t.soldierId || '-'}</td><td>${t.from || '-'}</td><td>${t.to || '-'}</td><td>${t.date || '-'}</td><td><span class="badge badge-${t.status === 'Approved' ? 'success' : t.status === 'Rejected' ? 'danger' : 'warning'}">${t.status || 'Pending'}</span></td></tr>`;
+            table += `<tr><td>${t.from || '-'}</td><td>${t.to || '-'}</td><td>${t.reason || '-'}</td><td>${t.date || '-'}</td><td><span class="badge badge-${t.status === 'Approved' ? 'success' : t.status === 'Rejected' ? 'danger' : 'warning'}">${t.status || 'Pending'}</span></td></tr>`;
         });
         return table + '</tbody></table>';
     };
 
     const salaryContent = () => {
-        const sols = soldiers();
-        const salaries = DataStorage.getSalaries();
-        let table = '<table class="data-table"><thead><tr><th>Soldier</th><th>Month</th><th>Total</th><th>Status</th></tr></thead><tbody>';
-        sols.forEach(s => {
-            salaries.filter(sal => sal.userId === s.id).slice(0, 3).forEach(sal => {
-                table += `<tr><td>${s.name}</td><td>${sal.month}</td><td>₹${(sal.total || 0).toLocaleString()}</td><td><span class="badge badge-${sal.status === 'Paid' ? 'success' : 'warning'}">${sal.status}</span></td></tr>`;
-            });
+        const salaries = StaticData.getSalariesByLieutenant(session.id);
+        if (salaries.length === 0) return '<p>No salary records.</p>';
+        let table = '<table class="data-table"><thead><tr><th>Month</th><th>Amount</th><th>Status</th></tr></thead><tbody>';
+        salaries.forEach(s => {
+            table += `<tr><td>${s.month}</td><td>₹${(s.total || 0).toLocaleString()}</td><td><span class="badge badge-${s.status === 'Paid' ? 'success' : 'warning'}">${s.status}</span></td></tr>`;
         });
         return table + '</tbody></table>';
     };
