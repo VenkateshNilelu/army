@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Indian Army Civilian Staff</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
 </head>
 <body class="auth-page">
     <header class="auth-header">
@@ -37,11 +38,11 @@
                     <input type="text" id="mobileOrEmail" name="mobileOrEmail" placeholder="10-digit mobile or email" required>
                     <span class="error-msg" id="mobileOrEmailError"></span>
                 </div>
-                <div class="form-group" id="otpGroup" style="display: none;">
+                <div class="form-group" id="otpGroup">
                     <label>OTP</label>
                     <input type="text" id="otp" name="otp" placeholder="6-digit OTP" maxlength="6" pattern="[0-9]{6}">
                     <span class="error-msg" id="otpError"></span>
-                    <small style="color: var(--gray);">Default OTP: 123456 (simulation)</small>
+                    <small>Default OTP: 123456 (simulation)</small>
                 </div>
                 <button type="button" id="sendOtpBtn" class="btn btn-primary btn-block">Send OTP</button>
                 <button type="submit" id="loginBtn" class="btn btn-primary btn-block" disabled>Login</button>
@@ -50,8 +51,8 @@
                 <a href="register.html">Register</a>
                 <a href="forgot-password.html">Forgot Password?</a>
             </div>
-            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--gray);">Quick Access (bypass):</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+            <p>Quick Access (bypass):</p>
+            <div class="quick-login-wrap">
                 <a href="#" class="quick-login-btn" data-role="Soldier">Soldier</a>
                 <a href="#" class="quick-login-btn" data-role="Lieutenant">Lieutenant</a>
                 <a href="#" class="quick-login-btn" data-role="Colonel">Colonel</a>
@@ -63,119 +64,6 @@
 
     <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
-    <script>
-        Auth.init();
-        Auth.redirectIfLoggedIn();
-
-        document.querySelectorAll('.quick-login-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const role = this.dataset.role;
-                const user = DataStorage.getUsers().find(u => u.rank === role);
-                if (user) { DataStorage.setSession(user); window.location.href = Auth.DASHBOARD_MAP[role]; }
-            });
-        });
-
-        const form = document.getElementById('loginForm');
-        const serviceId = document.getElementById('serviceId');
-        const rank = document.getElementById('rank');
-        const mobileOrEmail = document.getElementById('mobileOrEmail');
-        const otpGroup = document.getElementById('otpGroup');
-        const otp = document.getElementById('otp');
-        const sendOtpBtn = document.getElementById('sendOtpBtn');
-        const loginBtn = document.getElementById('loginBtn');
-
-        let otpVerified = false;
-        const SIMULATED_OTP = '123456';
-
-        function validateEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-
-        function validateMobile(mob) {
-            return /^[6-9]\d{9}$/.test(mob.replace(/\s/g, ''));
-        }
-
-        function showError(el, msg) {
-            el.classList.add('error');
-            const err = document.getElementById(el.id + 'Error');
-            if (err) err.textContent = msg;
-        }
-
-        function clearError(el) {
-            el.classList.remove('error');
-            const err = document.getElementById(el.id + 'Error');
-            if (err) err.textContent = '';
-        }
-
-        function validateStep1() {
-            let valid = true;
-            clearError(serviceId);
-            clearError(rank);
-            clearError(mobileOrEmail);
-            if (!serviceId.value.trim()) {
-                showError(serviceId, 'Service ID is required');
-                valid = false;
-            }
-            if (!rank.value) {
-                showError(rank, 'Please select your rank');
-                valid = false;
-            }
-            const me = mobileOrEmail.value.trim();
-            if (!me) {
-                showError(mobileOrEmail, 'Mobile or Email is required');
-                valid = false;
-            } else if (!validateEmail(me) && !validateMobile(me)) {
-                showError(mobileOrEmail, me.includes('@') ? 'Invalid email format' : 'Enter valid 10-digit mobile');
-                valid = false;
-            }
-            return valid;
-        }
-
-        sendOtpBtn.addEventListener('click', () => {
-            if (!validateStep1()) return;
-            otpGroup.style.display = 'block';
-            otpVerified = false;
-            loginBtn.disabled = true;
-            sendOtpBtn.textContent = 'OTP Sent! Resend in 60s';
-            sendOtpBtn.disabled = true;
-            setTimeout(() => {
-                sendOtpBtn.textContent = 'Resend OTP';
-                sendOtpBtn.disabled = false;
-            }, 60000);
-        });
-
-        otp.addEventListener('input', () => {
-            if (otp.value === SIMULATED_OTP) {
-                otpVerified = true;
-                loginBtn.disabled = false;
-                clearError(otp);
-            } else {
-                otpVerified = false;
-                loginBtn.disabled = true;
-            }
-        });
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!validateStep1()) return;
-            if (!otpVerified) {
-                showError(otp, 'Enter valid OTP');
-                return;
-            }
-            if (otp.value !== SIMULATED_OTP) {
-                showError(otp, 'Invalid OTP');
-                return;
-            }
-            const user = DataStorage.getUserByCredentials(serviceId.value.trim(), mobileOrEmail.value.trim());
-            if (!user) {
-                showError(serviceId, 'Invalid credentials or account blocked');
-                return;
-            }
-            DataStorage.setSession(user);
-            DataStorage.addLog('LOGIN', `User ${user.serviceId} logged in`);
-            window.location.href = Auth.DASHBOARD_MAP[user.rank];
-        });
-    </script>
+    <script src="js/auth-pages.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indian Army Civilian Staff Management System</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
 </head>
 <body class="landing-page">
     <div class="landing-overlay"></div>
@@ -38,14 +39,7 @@
                     <a href="login.html" class="btn btn-primary btn-lg">Login to Portal</a>
                     <a href="register.html" class="btn btn-outline btn-lg">New Registration</a>
                 </div>
-                <p style="margin-top:1.5rem; color: rgba(255,255,255,0.8); font-size: 0.9rem;">Quick Access (bypass login):</p>
-                <div class="hero-actions" style="margin-top: 0.5rem;">
-                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Soldier">Soldier</a>
-                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Lieutenant">Lieutenant</a>
-                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Colonel">Colonel</a>
-                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Accountant">Accountant</a>
-                    <a href="#" class="btn btn-outline btn-sm quick-login" data-role="Admin">Admin</a>
-                </div>
+               
             </div>
         </section>
 
@@ -90,19 +84,6 @@
 
     <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
-    <script>
-        DataStorage.init();
-        document.querySelectorAll('.quick-login').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const role = this.dataset.role;
-                const user = DataStorage.getUsers().find(u => u.rank === role);
-                if (user) {
-                    DataStorage.setSession(user);
-                    window.location.href = Auth.DASHBOARD_MAP[role];
-                }
-            });
-        });
-    </script>
+    <script src="js/pages.js"></script>
 </body>
 </html>

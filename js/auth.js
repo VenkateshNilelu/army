@@ -1,5 +1,6 @@
 /**
  * Authentication Module
+ * Path-aware redirects work from both root and pages/ folder.
  */
 
 (function() {
@@ -12,6 +13,24 @@
         Admin: 'pages/admin-dashboard.html'
     };
 
+    function isInPagesFolder() {
+        var path = window.location.pathname || '';
+        return path.indexOf('/pages/') !== -1 || path.indexOf('\\pages\\') !== -1;
+    }
+
+    function getLoginUrl() {
+        return isInPagesFolder() ? '../login.html' : 'login.html';
+    }
+
+    function getIndexUrl() {
+        return isInPagesFolder() ? '../index.html' : 'index.html';
+    }
+
+    function getDashboardUrl(rank) {
+        var name = (DASHBOARD_MAP[rank] || '').split('/').pop() || 'soldier-dashboard.html';
+        return isInPagesFolder() ? name : (DASHBOARD_MAP[rank] || 'pages/soldier-dashboard.html');
+    }
+
     function initAuth() {
         if (typeof DataStorage !== 'undefined') DataStorage.init();
     }
@@ -21,27 +40,29 @@
     }
 
     function redirectIfLoggedIn() {
-        const session = getSession();
+        var session = getSession();
         if (session && DASHBOARD_MAP[session.rank]) {
-            window.location.href = DASHBOARD_MAP[session.rank];
+            window.location.href = getDashboardUrl(session.rank);
         }
     }
 
     function requireAuth() {
-        const session = getSession();
+        var session = getSession();
         if (!session) {
-            window.location.href = 'login.html';
+            window.location.href = getLoginUrl();
             return null;
         }
         return session;
     }
 
     function requireRole(allowedRoles) {
-        const session = requireAuth();
-        if (!session) return null;
+        var session = getSession();
+        if (!session) {
+            window.location.href = getLoginUrl();
+            return null;
+        }
         if (!allowedRoles.includes(session.rank)) {
-            const dash = DASHBOARD_MAP[session.rank];
-            window.location.href = dash || 'index.html';
+            window.location.href = getDashboardUrl(session.rank);
             return null;
         }
         return session;
@@ -50,6 +71,9 @@
     window.Auth = {
         RANKS,
         DASHBOARD_MAP,
+        getLoginUrl,
+        getIndexUrl,
+        getDashboardUrl,
         init: initAuth,
         getSession,
         redirectIfLoggedIn,

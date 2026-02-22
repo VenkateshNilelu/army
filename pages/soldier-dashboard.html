@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soldier Dashboard - Indian Army Civilian Staff</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/pages.css">
 </head>
 <body class="dashboard-layout">
     <header class="dashboard-header">
         <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">☰</button>
         <div class="dashboard-header-left">
             <div class="profile-trigger" id="profileTrigger">
-                <img id="profilePhotoImg" class="profile-photo" src="" alt="Photo" style="display:none;">
+                <img id="profilePhotoImg" class="profile-photo" alt="Profile photo" style="display:none;">
                 <div id="profilePhotoPlaceholder" class="profile-photo-placeholder">👤</div>
                 <div class="profile-info">
                     <span class="rank-name" id="profileRank">Soldier</span>
@@ -26,7 +27,7 @@
             </div>
             <div class="notification-dropdown" id="notificationDropdown">
                 <div id="notificationList"></div>
-                <div style="padding: 0.5rem; text-align: center;">
+                <div class="dropdown-footer">
                     <a href="notification-view.html">View All</a>
                 </div>
             </div>

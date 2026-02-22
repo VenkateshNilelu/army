@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accountant Dashboard - Indian Army Civilian Staff</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/pages.css">
 </head>
 <body class="dashboard-layout">
     <header class="dashboard-header">
@@ -26,7 +27,7 @@
             </div>
             <div class="notification-dropdown" id="notificationDropdown">
                 <div id="notificationList"></div>
-                <div style="padding: 0.5rem; text-align: center;"><a href="notification-view.html">View All</a></div>
+                <div class="dropdown-footer"><a href="notification-view.html">View All</a></div>
             </div>
         </div>
     </header>
@@ -74,7 +75,7 @@
             </div>
             <button type="button" id="acSearchBtn" class="btn btn-primary">Search</button>
         </section>
-        <section class="section-card" id="acResultSection" style="display:none;">
+        <section class="section-card" id="acResultSection">
             <h3>Month-wise Salary</h3>
             <div class="table-container">
                 <table class="data-table" id="acSalaryTable"></table>

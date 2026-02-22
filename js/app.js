@@ -42,15 +42,41 @@
         menu.classList.toggle('active');
     }
 
+    function getDefaultProfileImagePath() {
+        var path = window.location.pathname || '';
+        return (path.indexOf('/pages/') !== -1 || path.indexOf('\\pages\\') !== -1) ? '../assets/soldierprofilephoto.png' : 'assets/soldierprofilephoto.png';
+    }
+
     function setupDashboardCommon() {
         const session = getSession();
         if (!session) return;
         const photoEl = document.getElementById('profilePhotoImg');
         const placeholder = document.getElementById('profilePhotoPlaceholder');
-        if (photoEl && session.photo) {
-            photoEl.src = session.photo;
-            photoEl.style.display = 'block';
-            if (placeholder) placeholder.style.display = 'none';
+        const user = typeof DataStorage !== 'undefined' && session.id ? DataStorage.getUser(session.id) : null;
+        const photo = (user && user.photo) || session.photo;
+        if (photoEl) {
+            if (photo) {
+                photoEl.src = photo;
+                photoEl.style.display = 'block';
+                if (placeholder) placeholder.style.display = 'none';
+                photoEl.onerror = function() {
+                    photoEl.style.display = 'none';
+                    photoEl.removeAttribute('src');
+                    if (placeholder) placeholder.style.display = '';
+                };
+            } else {
+                photoEl.style.display = 'none';
+                if (placeholder) placeholder.style.display = '';
+                photoEl.onerror = function() {
+                    photoEl.style.display = 'none';
+                    if (placeholder) placeholder.style.display = '';
+                };
+                photoEl.onload = function() {
+                    photoEl.style.display = 'block';
+                    if (placeholder) placeholder.style.display = 'none';
+                };
+                photoEl.src = getDefaultProfileImagePath();
+            }
         }
         document.getElementById('profileRank') && (document.getElementById('profileRank').textContent = session.rank);
         document.getElementById('profileServiceId') && (document.getElementById('profileServiceId').textContent = session.serviceId);
@@ -66,7 +92,7 @@
         });
         document.getElementById('logoutBtn')?.addEventListener('click', () => {
             DataStorage.clearSession();
-            window.location.href = 'index.html';
+            window.location.href = Auth.getIndexUrl();
         });
 
         renderNotifications();

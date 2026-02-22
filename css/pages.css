@@ -1,0 +1,83 @@
+/* ========== index (landing) ========== */
+.hero-content .hero-actions + p {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+.hero-content .hero-actions.quick-access {
+  margin-top: 0.5rem;
+}
+
+/* ========== login ========== */
+#otpGroup { display: none; }
+#otpGroup small { color: var(--gray); }
+.auth-card .auth-links + p {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+.quick-login-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* ========== register ========== */
+.register-card.auth-card { max-width: 500px; }
+.progress-indicator {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.form-step h3 { margin-bottom: 1rem; }
+.form-step { display: none; }
+.form-step.active { display: block; }
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.form-actions #prevBtn,
+.form-actions #submitBtn { display: none; }
+.register-auth-links { margin-top: 1rem; }
+
+/* ========== forgot-password ========== */
+.forgot-password-intro {
+  margin-bottom: 1rem;
+  color: var(--gray);
+}
+.forgot-auth-links { margin-top: 1rem; }
+
+/* ========== dashboards (shared) ========== */
+.notification-dropdown .dropdown-footer {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+/* ========== admin-dashboard ========== */
+.admin-analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+.admin-analytics-card {
+  background: var(--beige-light);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* ========== accountant-dashboard ========== */
+#acResultSection { display: none; }
+
+/* ========== notification-view ========== */
+#backLink {
+  color: white;
+  text-decoration: none;
+}
+.notification-view-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-light);
+}
+.notification-view-item p { margin: 0.3rem 0 0; }
+.notification-view-item small { color: var(--gray); }
