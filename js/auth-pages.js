@@ -9,18 +9,7 @@
   var forgotForm = document.getElementById('forgotForm');
 
   if (loginForm) {
-     // Auth.redirectIfLoggedIn(); // Disabled to stop auto redirect from login page
-    document.querySelectorAll('.quick-login-btn').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var role = this.dataset.role;
-        var user = DataStorage.getUsers().find(function (u) { return u.rank === role; });
-        if (user) {
-          DataStorage.setSession(user);
-          window.location.href = Auth.getDashboardUrl(role);
-        }
-      });
-    });
+    Auth.redirectIfLoggedIn(); // Enable redirect if already logged in
     var serviceId = document.getElementById('serviceId');
     var rank = document.getElementById('rank');
     var mobileOrEmail = document.getElementById('mobileOrEmail');
@@ -47,13 +36,21 @@
       var err = document.getElementById(el.id + 'Error');
       if (err) err.textContent = '';
     }
+    function validateServiceId(id) {
+      // 4 letters followed by 6 digits
+      return /^[A-Za-z]{4}\d{6}$/.test(id);
+    }
     function validateStep1() {
       var valid = true;
       clearError(serviceId);
       clearError(rank);
       clearError(mobileOrEmail);
-      if (!serviceId.value.trim()) {
+      var sid = serviceId.value.trim();
+      if (!sid) {
         showError(serviceId, 'Service ID is required');
+        valid = false;
+      } else if (!validateServiceId(sid)) {
+        showError(serviceId, 'Format: 4 letters + 6 digits (e.g. ABCD123456)');
         valid = false;
       }
       if (!rank.value) {

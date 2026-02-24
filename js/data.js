@@ -38,6 +38,32 @@ const DataStorage = {
             localStorage.setItem(this.KEYS.BATTALIONS, JSON.stringify(this.getDefaultBattalions()));
         }
         this.seedSampleSalaries();
+        this.seedSampleTransfers();
+    },
+    seedSampleTransfers() {
+        try {
+            const transfers = this.getTransfers();
+            if (transfers.length > 0) return;
+            const users = this.getUsers();
+            const battalions = this.getBattalions();
+            users.forEach((u, idx) => {
+                if (u.rank === 'Soldier' || u.rank === 'Lieutenant' || u.rank === 'Colonel') {
+                    const fromBat = battalions.find(b => b.id === u.battalion) || battalions[0];
+                    const toBat = battalions[(battalions.indexOf(fromBat) + 1) % battalions.length];
+                    this.addTransfer({
+                        userId: u.id,
+                        soldierId: u.id,
+                        soldierName: u.name,
+                        from: fromBat?.name || '-',
+                        to: toBat?.name || '-',
+                        date: `2025-0${(idx%9)+1}-15`,
+                        status: idx % 2 === 0 ? 'Approved' : 'Pending',
+                        reason: 'Routine transfer',
+                        commandingOfficer: toBat?.coId || null
+                    });
+                }
+            });
+        } catch (e) {}
     },
 
     seedSampleSalaries() {

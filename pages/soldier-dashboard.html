@@ -50,7 +50,7 @@
 
     <main class="main-content">
         <div class="greeting-section">
-            <h1>Welcome Soldier</h1>
+            <h1 id="dashboardGreeting">Welcome</h1>
             <p id="greetingSub">Manage your leave, salary, and transfer records</p>
         </div>
         <div class="action-cards">
@@ -67,6 +67,17 @@
     <script src="../js/auth.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/modals.js"></script>
-    <script src="../js/soldier.js"></script>
+        <script src="../js/soldier.js"></script>
+        <script>
+        // Set greeting to show user name
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                var session = (typeof DataStorage !== 'undefined' && DataStorage.getSession && DataStorage.getSession()) || null;
+                if (session && session.name && document.getElementById('dashboardGreeting')) {
+                    document.getElementById('dashboardGreeting').textContent = 'Welcome ' + session.name;
+                }
+            } catch(e) {}
+        });
+        </script>
 </body>
 </html>

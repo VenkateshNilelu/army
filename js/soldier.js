@@ -9,8 +9,25 @@
     DataStorage.init();
     App.setupDashboardCommon();
 
-    document.getElementById('sideMenuRank').textContent = session.rank;
+    document.getElementById('sideMenuRank').textContent = session.name || session.rank;
     document.getElementById('sideMenuServiceId').textContent = session.serviceId;
+    // Show name in header
+    const profileRank = document.getElementById('profileRank');
+    if (profileRank) profileRank.textContent = session.name || session.rank;
+    // System-generated notifications (demo)
+    function addSystemNotifications() {
+        const existing = DataStorage.getNotifications(session.id);
+        if (!existing.some(n => n.type === 'System' && n.title === 'Welcome')) {
+            DataStorage.addNotification(session.id, 'System', 'Welcome', `Welcome ${session.name}! This is your dashboard.`);
+        }
+        if (!existing.some(n => n.type === 'System' && n.title === 'Salary Credited')) {
+            DataStorage.addNotification(session.id, 'System', 'Salary Credited', 'Your monthly salary has been credited.');
+        }
+        if (!existing.some(n => n.type === 'System' && n.title === 'Transfer Notice')) {
+            DataStorage.addNotification(session.id, 'System', 'Transfer Notice', 'You have been transferred to a new battalion.');
+        }
+    }
+    addSystemNotifications();
 
     document.getElementById('hamburgerBtn')?.addEventListener('click', () => App.toggleSideMenu());
 
@@ -26,10 +43,19 @@
         `;
     };
 
-    // Leave Request
+    // Leave Request with previous requests
     const leaveContent = () => {
-        const leaves = DataStorage.getLeaves().filter(l => l.userId === session.id && l.status === 'Pending');
+        const leaves = DataStorage.getLeaves().filter(l => l.userId === session.id);
+        let prevTable = '';
+        if (leaves.length > 0) {
+            prevTable = `<h4>Previous Leave Requests</h4><table class="data-table"><thead><tr><th>Type</th><th>Reason</th><th>Start</th><th>End</th><th>Days</th><th>Status</th></tr></thead><tbody>`;
+            leaves.slice(-10).reverse().forEach(l => {
+                prevTable += `<tr><td>${l.type}</td><td>${l.reason}</td><td>${l.startDate}</td><td>${l.endDate}</td><td>${l.days}</td><td><span class="badge badge-${l.status === 'Approved' ? 'success' : l.status === 'Pending' ? 'warning' : 'danger'}">${l.status}</span></td></tr>`;
+            });
+            prevTable += '</tbody></table>';
+        }
         return `
+            ${prevTable}
             <h4>Apply Leave</h4>
             <form id="leaveForm">
                 <div class="form-group">
