@@ -22,30 +22,40 @@
                     <span class="error-msg" id="serviceIdError"></span>
                 </div>
                 <div class="form-group">
-                    <label>Rank</label>
-                    <select id="rank" name="rank" required>
-                        <option value="">-- Select Rank --</option>
+                    <label>Role</label>
+                    <select id="loginRole" name="loginRole" required>
+                        <option value="">-- Select Role --</option>
                         <option value="Soldier">Soldier</option>
                         <option value="Lieutenant">Lieutenant</option>
                         <option value="Colonel">Colonel</option>
                         <option value="Accountant">Accountant</option>
                         <option value="Admin">Admin</option>
                     </select>
-                    <span class="error-msg" id="rankError"></span>
+                    <span class="error-msg" id="loginRoleError"></span>
                 </div>
                 <div class="form-group">
                     <label>Mobile / Email</label>
-                    <input type="text" id="mobileOrEmail" name="mobileOrEmail" placeholder="10-digit mobile or email" required>
-                    <span class="error-msg" id="mobileOrEmailError"></span>
+                    <input type="text" id="loginMobileOrEmail" name="loginMobileOrEmail" placeholder="10-digit mobile or email" required>
+                    <span class="error-msg" id="loginMobileOrEmailError"></span>
                 </div>
                 <div class="form-group" id="otpGroup">
                     <label>OTP</label>
-                    <input type="text" id="otp" name="otp" placeholder="6-digit OTP" maxlength="6" pattern="[0-9]{6}">
-                    <span class="error-msg" id="otpError"></span>
+                    <input type="text" id="loginOtp" name="loginOtp" placeholder="6-digit OTP" maxlength="6" pattern="[0-9]{6}">
+                    <span class="error-msg" id="loginOtpError"></span>
                     <small>Default OTP: 123456 (simulation)</small>
                 </div>
-                <button type="button" id="sendOtpBtn" class="btn btn-primary btn-block">Send OTP</button>
-                <button type="submit" id="loginBtn" class="btn btn-primary btn-block" disabled>Login</button>
+                <button type="button" id="sendOtpBtn" class="btn btn-outline btn-block">Send OTP</button>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div style="position:relative;display:flex;align-items:center;">
+                        <input type="password" id="loginPassword" name="loginPassword" placeholder="Password" required minlength="8" style="flex:1;">
+                        <button type="button" id="toggleLoginPassword" tabindex="-1" style="background:none;border:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;padding:0;">
+                            <span id="loginPasswordEye" aria-label="Show password" style="font-size:1.2em;">👁️</span>
+                        </button>
+                    </div>
+                    <span class="error-msg" id="loginPasswordError"></span>
+                </div>
+                <button type="submit" id="loginBtn" class="btn btn-primary btn-block">Login</button>
             </form>
             <div class="auth-links">
                 <a href="register.html">Register</a>
@@ -58,5 +68,27 @@
     <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/auth-pages.js"></script>
+    <script>
+    // Show/hide password toggle for login
+    document.addEventListener('DOMContentLoaded', function() {
+        var pwd = document.getElementById('loginPassword');
+        var btn = document.getElementById('toggleLoginPassword');
+        var eye = document.getElementById('loginPasswordEye');
+        if (pwd && btn && eye) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (pwd.type === 'password') {
+                    pwd.type = 'text';
+                    eye.textContent = '🙈';
+                    eye.setAttribute('aria-label', 'Hide password');
+                } else {
+                    pwd.type = 'password';
+                    eye.textContent = '👁️';
+                    eye.setAttribute('aria-label', 'Show password');
+                }
+            });
+        }
+    });
+    </script>
 </body>
 </html>

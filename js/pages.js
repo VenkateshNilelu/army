@@ -4,22 +4,6 @@
 (function () {
   DataStorage.init();
 
-  /* ---------- index: quick-login ---------- */
-  var quickLogin = document.querySelectorAll('.quick-login');
-  if (quickLogin.length) {
-    quickLogin.forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var role = this.dataset.role;
-        var user = DataStorage.getUsers().find(function (u) { return u.rank === role; });
-        if (user) {
-          DataStorage.setSession(user);
-          window.location.href = Auth.getDashboardUrl(role);
-        }
-      });
-    });
-  }
-
   /* ---------- notification-view ---------- */
   var backLink = document.getElementById('backLink');
   var notificationList = document.getElementById('notificationList');

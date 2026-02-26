@@ -1,0 +1,25 @@
+WHEN WE ENTER ANY OF THIS DATA THEN IT SHOULD LOGIN ACCORDINGLY Here are updated fake credentials that strictly follow your Service ID and password rules:
+
+Admin
+
+Service ID: ADMN123456
+Password: Admin@123
+Colonel
+
+Service ID: COLN123456
+Password: Col@1234
+
+Lieutenant
+
+Service ID: LIEU123456
+Password: Lieut@12
+Accountant
+
+Service ID: ACCO123456
+Password: Acc@1234
+Soldier
+
+Service ID: SOLD123456
+Password: Sold@123
+
+IT SHOULD NOT DEPENT ON LOCAL STOARAGE  VALIDATE LOGIN THROUGH JS FOR THIS DETAILS 
