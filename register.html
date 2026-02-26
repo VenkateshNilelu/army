@@ -173,13 +173,20 @@
                     <div class="form-group">
                         <label>Password</label>
                         <div style="position:relative;display:flex;align-items:center;">
-                            <input type="password" id="regPassword" required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" placeholder="At least 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char" style="flex:1;">
+                            <input type="password" id="regPassword" required minlength="8" maxlength="12" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[^\s]{8,12}$" style="flex:1;">
                             <button type="button" id="toggleRegPassword" tabindex="-1" style="background:none;border:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;padding:0;">
                                 <span id="regPasswordEye" aria-label="Show password" style="font-size:1.2em;">👁️</span>
                             </button>
                         </div>
                         <span class="error-msg" id="regPasswordError"></span>
-                        <small>Min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char</small>
+                        <ul class="password-rules">
+                            <li>✔ Minimum 8–12 characters</li>
+                            <li>✔ At least 1 uppercase letter</li>
+                            <li>✔ At least 1 lowercase letter</li>
+                            <li>✔ At least 1 number</li>
+                            <li>✔ At least 1 special character</li>
+                            <li>✔ No spaces</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="form-actions">

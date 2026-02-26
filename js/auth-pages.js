@@ -17,7 +17,10 @@
     var sendOtpBtn = document.getElementById('sendOtpBtn');
     var otpGroup = document.getElementById('otpGroup');
     var otp = document.getElementById('loginOtp');
+    var verifyOtpBtn = document.getElementById('verifyOtpBtn');
     var otpVerified = false;
+    var otpTimer = null;
+    var otpTimeLeft = 0;
     const SIMULATED_OTP = '123456';
 
     function showError(el, msg) {
@@ -34,7 +37,8 @@
       return /^[A-Za-z]{4}\d{6}$/.test(id);
     }
     function validatePasswordProfessional(pw) {
-      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(pw);
+      // 8-12 chars, 1 upper, 1 lower, 1 number, 1 special, no spaces
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[^\s]{8,12}$/.test(pw);
     }
     function validateStep1() {
       let valid = true;
@@ -73,7 +77,7 @@
         showError(password, 'Password is required');
         valid = false;
       } else if (!validatePasswordProfessional(password.value)) {
-        showError(password, 'Min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char');
+        showError(password, 'Password must be 8–12 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char, no spaces');
         valid = false;
       }
       return valid;
@@ -84,23 +88,44 @@
       otpGroup.style.display = 'block';
       otpVerified = false;
       loginBtn.disabled = true;
-      sendOtpBtn.textContent = 'OTP Sent! Resend in 60s';
+      sendOtpBtn.textContent = 'OTP Sent! Resend in 30s';
       sendOtpBtn.disabled = true;
+      sendOtpBtn.classList.add('btn-otp');
       otp.value = '';
-      setTimeout(function () {
-        sendOtpBtn.textContent = 'Resend OTP';
-        sendOtpBtn.disabled = false;
-      }, 60000);
+      verifyOtpBtn.style.display = 'inline-block';
+      otpTimeLeft = 30;
+      if (otpTimer) clearInterval(otpTimer);
+      otpTimer = setInterval(function () {
+        otpTimeLeft--;
+        if (otpTimeLeft > 0) {
+          sendOtpBtn.textContent = 'Resend in ' + otpTimeLeft + 's';
+        } else {
+          sendOtpBtn.textContent = 'Resend OTP';
+          sendOtpBtn.disabled = false;
+          clearInterval(otpTimer);
+        }
+      }, 1000);
     });
 
     otp.addEventListener('input', function () {
+      verifyOtpBtn.style.display = otp.value.length === 6 ? 'inline-block' : 'none';
+    });
+
+    verifyOtpBtn.addEventListener('click', function () {
       if (otp.value === SIMULATED_OTP) {
         otpVerified = true;
         loginBtn.disabled = false;
         clearError(otp);
+        verifyOtpBtn.textContent = 'Verified';
+        verifyOtpBtn.disabled = true;
+        setTimeout(function(){
+          verifyOtpBtn.textContent = 'Verify OTP';
+          verifyOtpBtn.disabled = false;
+        }, 2000);
       } else {
         otpVerified = false;
         loginBtn.disabled = true;
+        showError(otp, 'Invalid OTP');
       }
     });
 
@@ -151,8 +176,8 @@
               return /^[A-Za-z]{4}\d{6}$/.test(id);
             }
             function validatePasswordProfessional(pw) {
-              // At least 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char
-              return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(pw);
+              // 8-12 chars, 1 upper, 1 lower, 1 number, 1 special, no spaces
+              return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[^\s]{8,12}$/.test(pw);
             }
         // --- Address Data ---
         const countryStateDistrict = {
@@ -303,10 +328,20 @@
           el.classList.add('error');
           valid = false;
         }
-        if (id === 'regPassword' && el.value && !validatePasswordProfessional(el.value)) {
-          err.textContent = 'Min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char';
-          el.classList.add('error');
-          valid = false;
+        if (id === 'regPassword' && el.value) {
+          const pw = el.value;
+          let msg = '';
+          if (pw.length < 8 || pw.length > 12) msg = 'Password must be 8–12 characters';
+          else if (!/[A-Z]/.test(pw)) msg = 'At least 1 uppercase letter required';
+          else if (!/[a-z]/.test(pw)) msg = 'At least 1 lowercase letter required';
+          else if (!/\d/.test(pw)) msg = 'At least 1 number required';
+          else if (!/[^A-Za-z0-9]/.test(pw)) msg = 'At least 1 special character required';
+          else if (/\s/.test(pw)) msg = 'No spaces allowed';
+          if (msg) {
+            err.textContent = msg;
+            el.classList.add('error');
+            valid = false;
+          }
         }
       });
       return valid;
